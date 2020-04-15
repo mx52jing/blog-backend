@@ -30,7 +30,27 @@ module.exports = appInfo => {
 	};
 	/* 关闭安全校验 */
 	config.security = {
-		csrf: false
+		csrf: false,
+		domainWhiteList: ['http://localhost:3000', 'http://localhost:3001']
+	}
+	/* 设置允许跨域 */
+	config.cors = {
+		/*
+		* withCredentials 为true的时候。不能讲把orign设置为*
+		* 我们有前台和admin两个项目都要请求这个后台接口，要配置允许多个域名访问
+		* 所以需要删除origin，cors插件会设置请求的域名为跨域域名
+		*/
+		// origin: '*',
+		credentials: true,
+		allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS'
+	}
+	/* 设置启动端口 */
+	config.cluster = {
+		listen: {
+			path: '',
+			port: 3002,
+			hostname: ''
+		}
 	}
 	// add your user config here
 	const userConfig = {
