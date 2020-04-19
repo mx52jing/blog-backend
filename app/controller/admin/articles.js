@@ -40,7 +40,9 @@ class ArticleController extends BasicController {
 	async update() {
 		await this.handleUpdate('Article')
 	}
-	async destory() {
+	/* 处理 DELETE /articles/:id */
+	async destroy() {
+		console.log('delete');
 		await this.handleDestory('Article')
 	}
 	/* 增加pv */
