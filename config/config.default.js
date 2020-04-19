@@ -52,6 +52,10 @@ module.exports = appInfo => {
 			hostname: ''
 		}
 	}
+	/* jwt */
+	config.jwt = {
+		secret: `${appInfo.name}*M*(%$>4L^@NG_S5=34*$JKSGFS9`
+	}
 	// add your user config here
 	const userConfig = {
 		// myAppName: 'egg',

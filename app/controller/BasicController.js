@@ -17,7 +17,7 @@ class BasicController extends Controller {
 				query['$or'] = keywordKeys.map(item => ({ [ item ]: new RegExp(keyword) }));
 			}
 			const Model = ctx.model[modelName],
-				total = await Model.count(query),
+				total = await Model.countDocuments(query),
 				data = await Model.find(query)
 				.skip((pageNum - 1) * pagesize)
 				.limit(pagesize);

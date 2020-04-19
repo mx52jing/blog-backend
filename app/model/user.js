@@ -1,4 +1,6 @@
 /* 用户 Schema */
+const { hashSync } = require('bcrypt')
+
 module.exports = app => {
 	const { mongoose } = app,
 		{ Schema } = mongoose
@@ -8,7 +10,10 @@ module.exports = app => {
 			unique: true
 		},
 		password: {
-			type: String
+			type: String,
+			set(val) {
+				return hashSync(val, 10)
+			}
 		}
 	})
 	return mongoose.model('User', UserSchema)
