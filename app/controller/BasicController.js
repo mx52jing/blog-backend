@@ -6,7 +6,7 @@ class BasicController extends Controller {
 		return this.ctx.session.user
 	}
 	/* 处理带有分页的列表请求 */
-	async handleListWithPagination({ modelName, keywordKeys = [] }) {
+	async handleListWithPagination({ modelName, keywordKeys = [], sortObj = {} }) {
 		try {
 			const { ctx } = this,
 				{ page = 1, pageSize = 10, keyword } = ctx.query,
@@ -18,7 +18,7 @@ class BasicController extends Controller {
 			}
 			const Model = ctx.model[modelName],
 				total = await Model.countDocuments(query),
-				data = await Model.find(query)
+				data = await Model.find(query).sort(sortObj)
 				.skip((pageNum - 1) * pagesize)
 				.limit(pagesize);
 			this.handleSuccess({
