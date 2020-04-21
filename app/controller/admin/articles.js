@@ -32,7 +32,7 @@ class ArticleController extends BasicController {
 	async show() {
 		const { ctx } = this
 		try {
-			const id = ctx.params.id,
+			const { id } = ctx.params,
 				{ Article } = ctx.model,
 				article = await Article.findById(id)
 			this.handleSuccess(article)
@@ -48,18 +48,6 @@ class ArticleController extends BasicController {
 	async destroy() {
 		console.log('delete');
 		await this.handleDestory('Article')
-	}
-	/* 增加pv */
-	async addPv() {
-		const { ctx } = this
-		try {
-			const id = ctx.params.id,
-				{ Article } = ctx.model
-			await Article.findByIdAndUpdate(id, { $inc: { pv: 1 }})
-			this.handleSuccess('pv增加成功')
-		}catch (e) {
-			this.handleError(e)
-		}
 	}
 }
 

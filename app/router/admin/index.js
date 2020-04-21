@@ -11,7 +11,6 @@ module.exports = app => {
 	router.post('/admin/logout', controller.admin.user.logout)
 	/* 文章 */
 	router.resources('articles', '/admin/articles', checkLogin, controller.admin.articles);
-	router.post('/admin/articles/pv/:id', checkLogin, controller.admin.articles.addPv)
 	/* 分类 */
 	router.resources('categories', '/admin/categories', checkLogin, controller.admin.categories);
 };

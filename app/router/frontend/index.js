@@ -9,4 +9,6 @@ module.exports = app => {
 	router.resources('articles', '/frontend/articles', controller.frontend.articles);
     /* 分类 */
     router.resources('categories', '/frontend/categories', controller.frontend.categories);
+    /* pv */
+	router.post('/frontend/articles/pv/:id', controller.frontend.articles.addPv)
 };

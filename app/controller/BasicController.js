@@ -5,6 +5,7 @@ class BasicController extends Controller {
 	get user() {
 		return this.ctx.session.user
 	}
+
 	/* 处理带有分页的列表请求 */
 	async handleListWithPagination({ modelName, keywordKeys = [], sortObj = {} }) {
 		try {
@@ -14,22 +15,22 @@ class BasicController extends Controller {
 				pagesize = isNaN(page) ? 10 : parseInt(pageSize);
 			let query = {};
 			if (!!keyword && !!keywordKeys.length) {
-				query['$or'] = keywordKeys.map(item => ({ [ item ]: new RegExp(keyword) }));
+				query['$or'] = keywordKeys.map(item => ({ [item]: new RegExp(keyword) }));
 			}
 			const Model = ctx.model[modelName],
 				total = await Model.countDocuments(query),
 				data = await Model.find(query).sort(sortObj)
-				.skip((pageNum - 1) * pagesize)
-				.limit(pagesize);
+					.skip((pageNum - 1) * pagesize)
+					.limit(pagesize);
 			this.handleSuccess({
 				page: pageNum,
 				pageSize: pagesize,
 				data,
 				total,
-				pageCount: Math.ceil(total/pagesize)
+				pageCount: Math.ceil(total / pagesize)
 			})
 		} catch (e) {
-            this.handleError(e)
+			this.handleError(e)
 		}
 	}
 
@@ -48,6 +49,7 @@ class BasicController extends Controller {
 			result: error
 		};
 	}
+
 	/* 处理更新 update */
 	async handleUpdate(modelName) {
 		const { ctx } = this
@@ -56,10 +58,11 @@ class BasicController extends Controller {
 				id = ctx.params.id
 			await ctx.model[modelName].findByIdAndUpdate(id, data)
 			this.handleSuccess('更新成功')
-		}catch (e) {
+		} catch (e) {
 			this.handleError(e)
 		}
 	}
+
 	/* 处理删除destory */
 	async handleDestory(modelName) {
 		const { ctx } = this
@@ -67,7 +70,7 @@ class BasicController extends Controller {
 			const id = ctx.params.id
 			await ctx.model[modelName].findByIdAndRemove(id)
 			this.handleSuccess('删除成功')
-		}catch (e) {
+		} catch (e) {
 			this.handleError(e)
 		}
 	}

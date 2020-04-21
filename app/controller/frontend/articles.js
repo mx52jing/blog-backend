@@ -8,7 +8,7 @@ class ArticleController extends BasicController {
         try {
             await this.handleListWithPagination({
                 modelName: 'Article',
-                keywordKeys: [ 'title' ],
+                keywordKeys: [ 'title', 'content' ],
 				sortObj: { createdAt: -1 }
             })
         } catch (e) {
@@ -19,7 +19,7 @@ class ArticleController extends BasicController {
     async show() {
         const { ctx } = this
         try {
-            const id = ctx.params.id,
+            const { id } = ctx.params,
                 { Article } = ctx.model,
                 article = await Article.findById(id)
             this.handleSuccess(article)
@@ -27,6 +27,18 @@ class ArticleController extends BasicController {
             this.handleError(e)
         }
     }
+	/* 增加pv */
+	async addPv() {
+		const { ctx } = this
+		try {
+			const { id } = ctx.params,
+				{ Article } = ctx.model
+			await Article.findByIdAndUpdate(id, { $inc: { pv: 1 }})
+			this.handleSuccess({ result: 'pv增加成功' })
+		}catch (e) {
+			this.handleError(e)
+		}
+	}
 }
 
 module.exports = ArticleController;
