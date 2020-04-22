@@ -39,6 +39,52 @@ class ArticleController extends BasicController {
 			this.handleError(e)
 		}
 	}
+	/* 文章归档 */
+    async archives() {
+        const { ctx } = this
+        try {
+            const { Article } = ctx.model,
+                { page = 1, pageSize = 20 } = ctx.request.body,
+                pageNum = isNaN(page) ? 1 : parseInt(page),
+                pagesize = isNaN(page) ? 10 : parseInt(pageSize),
+                data = await Article.aggregate([
+                    {
+                        $group: {
+                            _id: "",
+                            children: {
+                                $push: {
+                                    id: "$_id",
+                                    title: "$title",
+                                    createdAt: "$createdAt"
+                                }
+                            },
+                            total: {
+                                $sum: 1
+                            }
+                        }
+                    },
+                    {
+                        $unwind: "$children"
+                    },
+                    // {
+                    //     $group: {
+                    //         _id: { $year: "$children.createdAt"},
+                    //         // total: "$children.total",
+                    //         children: {
+                    //             $push: {
+                    //                 id: "$children.id",
+                    //                 title: "$children.title",
+                    //                 createdAt: "$children.createdAt"
+                    //             }
+                    //         }
+                    //     }
+                    // }
+                ])
+            this.handleSuccess(data)
+        }catch(e) {
+            this.handleError(e)
+        }
+    }
 }
 
 module.exports = ArticleController;
