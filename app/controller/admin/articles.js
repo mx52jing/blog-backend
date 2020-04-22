@@ -46,7 +46,6 @@ class ArticleController extends BasicController {
 	}
 	/* 处理 DELETE /articles/:id */
 	async destroy() {
-		console.log('delete');
 		await this.handleDestory('Article')
 	}
 }
