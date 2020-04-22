@@ -43,44 +43,34 @@ class ArticleController extends BasicController {
     async archives() {
         const { ctx } = this
         try {
-            const { Article } = ctx.model,
-                { page = 1, pageSize = 20 } = ctx.request.body,
-                pageNum = isNaN(page) ? 1 : parseInt(page),
-                pagesize = isNaN(page) ? 10 : parseInt(pageSize),
+			const { Article } = ctx.model,
+                // { year = 2020 } = ctx.query,
+				total = await Article.countDocuments(),
                 data = await Article.aggregate([
-                    {
-                        $group: {
-                            _id: "",
-                            children: {
-                                $push: {
-                                    id: "$_id",
-                                    title: "$title",
-                                    createdAt: "$createdAt"
-                                }
-                            },
-                            total: {
-                                $sum: 1
-                            }
-                        }
-                    },
-                    {
-                        $unwind: "$children"
-                    },
-                    // {
-                    //     $group: {
-                    //         _id: { $year: "$children.createdAt"},
-                    //         // total: "$children.total",
-                    //         children: {
-                    //             $push: {
-                    //                 id: "$children.id",
-                    //                 title: "$children.title",
-                    //                 createdAt: "$children.createdAt"
-                    //             }
-                    //         }
-                    //     }
-                    // }
+					{
+						$group: {
+							_id: { $year: "$createdAt" },
+							children: {
+								$push: {
+									id: "$_id",
+									title: "$title",
+									createdAt: "$createdAt",
+									pv: "$pv"
+								}
+							}
+						}
+					},
+					// {
+					// 	$match: {
+					// 		_id: year
+					// 	}
+					// },
+					{ $sort: { _id: -1 } },
                 ])
-            this.handleSuccess(data)
+            this.handleSuccess({
+				total,
+				data: data
+			})
         }catch(e) {
             this.handleError(e)
         }

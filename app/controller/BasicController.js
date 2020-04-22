@@ -2,10 +2,6 @@
 const Controller = require('egg').Controller;
 
 class BasicController extends Controller {
-    get user() {
-        return this.ctx.session.user
-    }
-
     /* 处理带有分页的列表请求 */
     async handleListWithPagination({ modelName, keywordKeys = [], sortObj = {} }) {
         try {
