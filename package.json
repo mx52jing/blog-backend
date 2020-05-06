@@ -27,7 +27,7 @@
     "node": ">=10.0.0"
   },
   "scripts": {
-    "start": "egg-scripts start --daemon --title=egg-server-blog-backend",
+    "start": "egg-scripts start --title=egg-server-blog-backend",
     "stop": "egg-scripts stop --title=egg-server-blog-backend",
     "dev": "egg-bin dev",
     "debug": "egg-bin debug",
@@ -36,7 +36,9 @@
     "cov": "egg-bin cov",
     "lint": "eslint .",
     "ci": "npm run lint && npm run cov",
-    "autod": "autod"
+    "autod": "autod",
+    "build:dk": "docker build -t mx52jing/blog-backend .",
+    "push:dk": "docker push mx52jing/blog-backend:latest"
   },
   "ci": {
     "version": "10"
