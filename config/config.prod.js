@@ -6,7 +6,7 @@ module.exports = appInfo => {
 		DATEBASE_USER, // 数据库用户名
 		DATEBASE_PWD, // 密码
 		DATEBASE_NAME, // 数据库名称
-		LISTEN_HOST
+		LISTEN_HOSTNAME
 	} = process.env
 	config.mongoose = {
 		client: {
@@ -21,8 +21,8 @@ module.exports = appInfo => {
 	}
 	config.cluster = {
 		listen: {
-			hostname: 'localhost',
-			port: 3002
+			port: 3002,
+            hostname: LISTEN_HOSTNAME
 		}
 	}
 	config.jwt = {
