@@ -20,7 +20,7 @@ module.exports = appInfo => {
 	}
 	config.cluster = {
 		listen: {
-			port: 3003
+			port: 3002
 		}
 	}
 	config.jwt = {
