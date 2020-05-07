@@ -10,7 +10,7 @@ module.exports = app => {
 	router.post('/api/admin/login', controller.admin.user.login)
 	router.post('/api/admin/logout', controller.admin.user.logout)
 	/* 文章 */
-	router.resources('articles', '/api//admin/articles', checkLogin, controller.admin.articles);
+	router.resources('articles', '/api/admin/articles', checkLogin, controller.admin.articles);
 	/* 分类 */
 	router.resources('categories', '/api/admin/categories', checkLogin, controller.admin.categories);
 };
