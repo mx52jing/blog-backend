@@ -6,11 +6,11 @@
 module.exports = app => {
 	const { router, controller } = app;
 	/* 文章 */
-	router.resources('articles', '/frontend/articles', controller.frontend.articles);
+	router.resources('articles', '/api/frontend/articles', controller.frontend.articles);
     /* 文章归档 */
-    router.get('/frontend/archives', controller.frontend.articles.archives)
+    router.get('/api/frontend/archives', controller.frontend.articles.archives)
     /* 分类 */
-    router.resources('categories', '/frontend/categories', controller.frontend.categories);
+    router.resources('categories', '/api/frontend/categories', controller.frontend.categories);
     /* pv */
-	router.post('/frontend/articles/pv/:id', controller.frontend.articles.addPv)
+	router.post('/api/frontend/articles/pv/:id', controller.frontend.articles.addPv)
 };
