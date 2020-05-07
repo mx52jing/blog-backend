@@ -5,4 +5,3 @@ RUN npm install
 COPY ./ /app
 EXPOSE 3002
 CMD EGG_SERVER_ENV=prod npm start
-
