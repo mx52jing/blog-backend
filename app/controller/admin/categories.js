@@ -5,11 +5,11 @@ const BasicController = require('../BasicController');
 class CategoryController extends BasicController {
 	/* 处理 GET /categories 获取全部分类 */
 	async index() {
-		const { ctx } = this
 		try {
-			const { Category } = ctx.model,
-				categories = await Category.find({})
-			this.handleSuccess(categories)
+			await this.handleListWithPagination({
+				modelName: 'Category',
+				sortObj: { createdAt: -1 }
+			});
 		} catch (e) {
 			this.handleError(e);
 		}

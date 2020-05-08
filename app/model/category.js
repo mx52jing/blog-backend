@@ -7,6 +7,10 @@ module.exports = app => {
 			type: String,
 			unique: true,
 			required: true
+		},
+		createdAt: {
+			type: Date,
+			default: Date.now
 		}
 	})
 	return mongoose.model('Category', CategorySchema)
