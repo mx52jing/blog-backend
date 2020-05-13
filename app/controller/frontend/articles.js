@@ -45,9 +45,11 @@ class ArticleController extends BasicController {
         const { ctx } = this
         try {
 			const { Article } = ctx.model,
-                // { year = 2020 } = ctx.query,
-				total = await Article.countDocuments(),
+				total = await Article.countDocuments({ isPublished: true }),
                 data = await Article.aggregate([
+					{
+						$match: { isPublished: true }
+					},
 					{
 						$group: {
 							_id: { $year: "$createdAt" },
@@ -61,11 +63,6 @@ class ArticleController extends BasicController {
 							}
 						}
 					},
-					// {
-					// 	$match: {
-					// 		_id: year
-					// 	}
-					// },
 					{ $sort: { _id: -1 } },
                 ])
             this.handleSuccess({

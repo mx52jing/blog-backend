@@ -28,7 +28,7 @@ class CategoryController extends BasicController {
             const categories = await Category.find({}),
                 newCategoryList = []
             for(let category of categories) {
-                const articleCount = await Article.countDocuments({ category: { $in: [category.name] } })
+                const articleCount = await Article.countDocuments({ category: { $in: [category.name] }, isPublished: true })
                 newCategoryList.push({
                     ...category.toObject(),
                     articleCount
