@@ -3,13 +3,12 @@ const Controller = require('egg').Controller;
 
 class BasicController extends Controller {
     /* 处理带有分页的列表请求 */
-    async handleListWithPagination({ modelName, keywordKeys = [], sortObj = {} }) {
+    async handleListWithPagination({ query = {}, modelName, keywordKeys = [], sortObj = {} }) {
         try {
             const { ctx } = this,
                 { page = 1, pageSize = 10, keyword } = ctx.query,
                 pageNum = isNaN(page) ? 1 : parseInt(page),
                 pagesize = isNaN(page) ? 10 : parseInt(pageSize);
-            let query = {};
             if(!!keyword && !!keywordKeys.length) {
                 query['$or'] = keywordKeys.map(item => ({ [item]: new RegExp(keyword) }));
             }

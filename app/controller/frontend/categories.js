@@ -12,7 +12,7 @@ class CategoryController extends BasicController {
                 pageNum = isNaN(page) ? 1 : parseInt(page),
                 pagesize = isNaN(page) ? 10 : parseInt(pageSize)
             if(!!name) {
-                const query = { category: { $in: [name] } },
+                const query = { category: { $in: [name] }, isPublished: true },
                     data = await Article.find(query)
                         .skip((pageNum - 1) * pagesize).limit(pagesize),
                     total = await Article.countDocuments(query)

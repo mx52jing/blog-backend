@@ -7,6 +7,7 @@ class ArticleController extends BasicController {
     async index() {
         try {
             await this.handleListWithPagination({
+				query: { isPublished: true },
                 modelName: 'Article',
                 keywordKeys: [ 'title', 'content' ],
 				sortObj: { createdAt: -1 }
