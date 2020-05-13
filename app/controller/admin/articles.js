@@ -20,9 +20,10 @@ class ArticleController extends BasicController {
 		const { ctx } = this;
 		try {
 			const artile = ctx.request.body,
+				msg = artile.isPublished ? '文章发表成功' : '成功保存至草稿',
 				{ Article } = ctx.model;
-			await Article.create(artile);
-			this.handleSuccess('文章发表成功');
+			await Article.create(artile)
+			this.handleSuccess(msg);
 		} catch (e) {
 			this.handleError(e);
 		}

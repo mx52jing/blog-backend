@@ -30,6 +30,10 @@ module.exports = app => {
         updatedAt: {
             type: Date,
             default: Date.now
+        },
+        isPublished: {
+            type: Boolean,
+            default: true
         }
     })
     return mongoose.model('Article', ArticleSchema)
