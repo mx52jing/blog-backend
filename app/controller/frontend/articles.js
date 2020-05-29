@@ -50,6 +50,9 @@ class ArticleController extends BasicController {
 					{
 						$match: { isPublished: true }
 					},
+                    {
+                    	$sort: { createdAt: -1 }
+					},
 					{
 						$group: {
 							_id: { $year: "$createdAt" },
@@ -63,7 +66,7 @@ class ArticleController extends BasicController {
 							}
 						}
 					},
-					{ $sort: { _id: 1 } },
+					{ $sort: { _id: -1 } },
                 ])
             this.handleSuccess({
 				total,
